@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="robots" content="noindex, nofollow" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Smile Brookline · Paid Ads Performance · Meta &amp; Google</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root{
+    /* AEVA tokens (extracted from design system) */
+    --teal-100:#EAF6F7; --teal-200:#CBE9ED; --teal-300:#A6D8E2; --teal-400:#7FC6D6;
+    --teal-500:#4C9DAD; --teal-600:#3C8896; --teal-700:#2F6D7B; --teal-800:#21505C; --teal-900:#183A44;
+
+    --slate-50:#F5F7FA; --slate-100:#EDF0F5; --slate-150:#D3DBE9; --slate-200:#BFC8D9;
+    --slate-300:#B8C3D6; --slate-400:#8F9BB7; --slate-500:#6C7B97;
+    --slate-600:#5A6A89; --slate-700:#46546E; --slate-800:#3A475F; --slate-900:#1E2A38;
+
+    --amber-100:#FDF3E5; --amber-300:#F0CD98; --amber-500:#E29B32; --amber-700:#B07020;
+    --success-500:#2D9D78;
+    --cream:#FDF3E5; --white:#FFFFFF;
+
+    --bg-app:var(--slate-100);
+    --bg-frosted:rgba(255,255,255,0.7);
+    --bg-surface:var(--white);
+
+    --fg-strong:var(--slate-800);
+    --fg-default:var(--slate-600);
+    --fg-muted:var(--slate-500);
+    --fg-subtle:var(--slate-400);
+
+    --gradient-brand: linear-gradient(180deg, #2F6873 0%, #59C4D9 100%);
+    --gradient-brand-h: linear-gradient(44.71deg, #2F6873 -18.34%, #59C4D9 120.98%);
+
+    --shadow-xs: 2px 2px 4px 0 rgba(96,132,139,0.10);
+    --shadow-sm: 0 2px 8px 0 rgba(96,132,139,0.10);
+    --shadow-md: 0 6px 16px 0 rgba(96,132,139,0.12);
+    --shadow-3d: 0 8px 24px -4px rgba(96,132,139,0.18), 0 2px 6px 0 rgba(214,218,230,1), inset 0 1px 0 0 rgba(255,255,255,0.6);
+
+    --radius-sm:8px; --radius-md:12px; --radius-lg:16px; --radius-xl:20px; --radius-pill:9999px;
+
+    /* Channel colors */
+    --c-google:var(--amber-500);
+    --c-google-tint:var(--amber-100);
+    --c-meta:var(--teal-500);
+    --c-meta-tint:var(--teal-100);
+
+    /* Treatment colors */
+    --t-co2:#6A4C93;
+    --t-hf:#C0507E;
+    --t-lhr:#2F7D42;
+    --t-cp:#3A475F;
+    --r-spend:#A9B4C9;
+    --r-rev:#21505C;
+    --r-up:#1F7558;
+    --r-down:#B23A48;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{
+    height:auto;
+    font-family:"Poppins",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+    color:var(--fg-default);
+    -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  }
+  body{background:var(--bg-app);display:block}
+
+  /* Screen 01 keeps the original fixed-viewport dashboard proportions */
+  .screen{
+    height:100vh;min-height:680px;
+    display:grid;grid-template-rows:auto 1fr;
+    overflow:hidden;
+  }
+
+  /* ─────────────────────────────────────────────── HEADER (brand gradient bar) */
+  header{
+    background:var(--gradient-brand);
+    padding:18px 32px 22px;
+    border-bottom-left-radius:12px;border-bottom-right-radius:12px;
+    display:flex;justify-content:space-between;align-items:center;
+    color:#fff;
+    box-shadow:0 6px 18px -8px rgba(47,104,115,0.35);
+    position:relative;z-index:2;
+  }
+  .brand{display:flex;align-items:center;gap:18px}
+  .aeva-logo{height:28px;width:auto;display:block;filter:brightness(0) invert(1)}
+  .brand-divider{width:1px;height:30px;background:rgba(255,255,255,0.25);flex-shrink:0}
+  .client-logo{height:40px;width:auto;display:block;filter:brightness(0) invert(1);opacity:.92}
+  .title-block{margin-left:6px}
+  .eyebrow{
+    font-size:10px;letter-spacing:1.6px;text-transform:uppercase;
+    font-weight:600;color:rgba(255,255,255,0.82);margin-bottom:4px;
+  }
+  h1{font-weight:600;font-size:18px;line-height:1.1;color:#fff;letter-spacing:-.1px}
+  h1 em{font-style:normal;font-weight:400;color:rgba(255,255,255,0.78)}
+
+  .cta-row{display:flex;gap:10px;align-items:center}
+  .pill{
+    background:rgba(255,255,255,0.14);
+    border:1px solid rgba(255,255,255,0.22);
+    padding:9px 16px;border-radius:var(--radius-pill);
+    font-size:12px;font-weight:500;color:#fff;
+    display:inline-flex;align-items:center;gap:8px;
+  }
+  .pill i{font-size:11px;opacity:.85}
+  .pill b{font-weight:600}
+  .btn{
+    padding:10px 18px;border-radius:var(--radius-sm);
+    background:#fff;color:var(--teal-700);
+    font-family:inherit;font-weight:600;font-size:12px;letter-spacing:.1px;
+    border:0;cursor:pointer;
+    display:inline-flex;align-items:center;gap:8px;
+    transition:filter 160ms ease,transform 160ms ease;
+    box-shadow:0 2px 6px rgba(24,58,68,0.18);
+  }
+  .btn:hover{filter:brightness(1.03)}
+  .btn:active{transform:scale(.98)}
+
+  /* ─────────────────────────────────────────────── GRID */
+  main{
+    display:grid;
+    grid-template-columns:repeat(12,1fr);
+    grid-template-rows:repeat(5,1fr);
+    gap:14px;
+    padding:16px 24px 22px;
+    min-height:0;position:relative;z-index:1;
+  }
+
+  .tile{
+    background:var(--bg-frosted);
+    border:1px solid var(--white);
+    border-radius:var(--radius-lg);
+    box-shadow:var(--shadow-xs);
+    padding:16px 18px;
+    display:flex;flex-direction:column;
+    transition:transform .25s ease, box-shadow .25s ease;
+    overflow:hidden;position:relative;color:var(--fg-default);
+  }
+  .tile:hover{transform:translateY(-1px);box-shadow:var(--shadow-md)}
+
+  .tile.hero{
+    background:var(--gradient-brand);
+    border:1px solid rgba(255,255,255,0.35);
+    box-shadow:var(--shadow-3d);
+    color:#fff;
+  }
+
+  .tile.brand-google::before,
+  .tile.brand-meta::before{
+    content:"";position:absolute;left:0;top:14px;bottom:14px;width:3px;border-radius:3px;
+  }
+  .tile.brand-google::before{background:var(--c-google)}
+  .tile.brand-meta::before{background:var(--c-meta)}
+
+  .ch-chip{
+    position:absolute;top:14px;right:14px;
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:9.5px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;
+    padding:4px 8px;border-radius:var(--radius-pill);
+  }
+  .ch-chip.g{background:var(--c-google-tint);color:var(--amber-700)}
+  .ch-chip.m{background:var(--c-meta-tint);color:var(--teal-700)}
+  .ch-chip i{font-size:9px}
+
+  /* ─── Grid placement */
+  .t-hero        {grid-column:1 / span 4; grid-row:1 / span 2}
+  .t-top-row     {grid-column:5 / span 8; grid-row:1; display:grid; grid-template-columns:repeat(3,1fr); gap:14px}
+  .t-trend       {grid-column:5 / span 8; grid-row:2 / span 2}
+  .t-summary     {grid-column:1 / span 4; grid-row:3 / span 3}
+  .t-g-cpc       {grid-column:5 / span 2; grid-row:4}
+  .t-m-cpm       {grid-column:7 / span 2; grid-row:4}
+  .t-g-clicks    {grid-column:5 / span 2; grid-row:5}
+  .t-m-reach     {grid-column:7 / span 2; grid-row:5}
+  .t-context       {grid-column:9 / span 4; grid-row:4 / span 2}
+
+  /* ─── Typography inside cards */
+  .label{font-size:10px;letter-spacing:1.6px;text-transform:uppercase;font-weight:600;color:var(--fg-muted)}
+  .number{
+    font-weight:600;font-size:38px;letter-spacing:-1px;line-height:1;
+    color:var(--fg-strong);font-feature-settings:"tnum";margin-top:6px;
+  }
+  .number small{font-size:16px;font-weight:500;color:var(--fg-muted)}
+  .caption{margin-top:auto;padding-top:8px;font-size:12px;color:var(--fg-default);font-weight:400;line-height:1.4}
+  .caption b{font-weight:600;color:var(--fg-strong)}
+  .delta{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:var(--success-500)}
+
+  .t-google-conv,.t-meta-leads,.t-total{display:grid;grid-template-rows:auto 1fr auto;padding-top:18px}
+  .t-google-conv .number{font-size:56px;letter-spacing:-2px;margin:0;align-self:center;color:var(--amber-500)}
+  .t-meta-leads .number{font-size:56px;letter-spacing:-2px;margin:0;align-self:center;color:var(--teal-600)}
+  .t-total .number{font-size:38px;letter-spacing:-1px;margin:0;align-self:center}
+  .t-total .number small{font-size:16px}
+
+  .compact{display:grid;grid-template-rows:auto 1fr auto;padding-left:22px}
+  .compact .label{font-size:9.5px;letter-spacing:1.4px;align-self:start}
+  .compact .number{font-size:30px;margin:0;align-self:center}
+  .compact.brand-google .number{color:var(--amber-500)}
+  .compact.brand-meta .number{color:var(--teal-600)}
+  .compact .caption{font-size:11px;padding-top:0;align-self:end}
+
+  /* ─── Hero internals */
+  .hero-eyebrow{font-size:10px;letter-spacing:1.6px;text-transform:uppercase;font-weight:600;color:rgba(255,255,255,0.82)}
+  .hero-title{font-weight:500;font-size:22px;line-height:1.28;color:#fff;margin-top:8px;letter-spacing:-.2px}
+  .hero-title em{font-style:normal;font-weight:700;color:#fff}
+  .hero-title em.g{color:#FDE3B6}
+  .hero-title em.m{color:#CBEDF4}
+  .hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:auto}
+  .h-stat{
+    background:rgba(255,255,255,0.12);
+    border:1px solid rgba(255,255,255,0.22);
+    border-radius:var(--radius-md);
+    padding:10px 12px;
+  }
+  .h-stat .l{font-size:9px;letter-spacing:1.4px;text-transform:uppercase;color:rgba(255,255,255,0.78);font-weight:500}
+  .h-stat .v{font-weight:600;font-size:20px;margin-top:3px;color:#fff;letter-spacing:-.4px;font-feature-settings:"tnum"}
+  .h-stat .s{font-size:10.5px;color:rgba(255,255,255,0.78);font-weight:400;margin-top:2px}
+
+  /* ─── Trend tile */
+  .trend-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px}
+  .trend-head .h-title{font-weight:600;font-size:14px;color:var(--fg-strong);margin-top:3px;letter-spacing:-.1px}
+  .legend-inline{display:flex;gap:14px;font-size:11px;font-weight:500;color:var(--fg-default);flex-wrap:wrap}
+  .legend-inline span{display:flex;align-items:center;gap:6px}
+  .legend-inline .dot{width:9px;height:9px;border-radius:50%}
+  .legend-inline .dot.g{background:var(--c-google)}
+  .legend-inline .dot.m{background:var(--c-meta)}
+
+  .trend-stack{flex:1;display:grid;grid-template-rows:1.55fr .9fr;gap:6px;min-height:0}
+  .chart-block{position:relative;min-height:0;display:flex;flex-direction:column}
+  .micro-label{font-size:9px;letter-spacing:1.4px;text-transform:uppercase;color:var(--fg-subtle);font-weight:600;margin:2px 0}
+  .chart-wrap{flex:1;position:relative;min-height:0}
+
+  /* ─── Share donut */
+  .pie-wrap{position:relative;flex:1;min-height:0;margin-top:4px}
+  .pie-center{position:absolute;inset:0;display:grid;place-items:center;text-align:center;pointer-events:none}
+  .pie-center .l{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--fg-subtle);font-weight:600}
+  .pie-center .v{font-weight:700;font-size:22px;color:var(--fg-strong);margin-top:2px;letter-spacing:-.4px}
+  .legend-block{margin-top:8px;display:flex;flex-direction:column;gap:6px}
+  .legend-block .row{display:flex;justify-content:space-between;align-items:center;font-size:12px}
+  .legend-block .row .left{display:flex;align-items:center;gap:8px;color:var(--fg-strong);font-weight:500}
+  .legend-block .row .left .dot{width:10px;height:10px;border-radius:50%}
+  .legend-block .row .v{font-weight:600;color:var(--fg-strong);font-feature-settings:"tnum"}
+  .legend-block .row .pct{color:var(--fg-muted);font-weight:500;margin-left:6px;font-size:11px}
+
+  /* ─── Summary tile */
+  .t-summary{
+    padding:18px 20px;
+    background:var(--gradient-brand);
+    border:1px solid rgba(255,255,255,0.35);
+    box-shadow:var(--shadow-3d);
+    color:#fff;
+  }
+  .t-summary .label{margin-bottom:8px;color:rgba(255,255,255,0.82)}
+  .summary-title{font-weight:500;font-size:20px;color:#fff;line-height:1.3;margin-bottom:12px;letter-spacing:-.2px}
+  .summary-title em{font-style:normal;font-weight:700;color:#CBEDF4}
+  .summary-body{font-size:13.5px;line-height:1.65;color:rgba(255,255,255,0.88);font-weight:400;flex:1;min-height:0}
+  .summary-body p + p{margin-top:10px}
+  .summary-body b{font-weight:600;color:#fff}
+  .tag-g{display:inline-flex;align-items:center;gap:4px;background:rgba(253,227,182,0.18);color:#FDE3B6;padding:1px 7px;border-radius:var(--radius-pill);font-weight:600;font-size:11.5px}
+  .tag-m{display:inline-flex;align-items:center;gap:4px;background:rgba(203,237,244,0.18);color:#CBEDF4;padding:1px 7px;border-radius:var(--radius-pill);font-weight:600;font-size:11.5px}
+  .tag-g i,.tag-m i{font-size:9px}
+
+  /* Floating chart tooltip — rendered in the DOM so it always sits above
+     donut centre labels and is never clipped by a tile's overflow */
+  #chartTip{
+    position:fixed;z-index:9999;pointer-events:none;
+    background:rgba(30,42,56,0.96);
+    color:#fff;border-radius:8px;padding:8px 11px;
+    font-family:"Poppins",system-ui,sans-serif;font-size:11.5px;font-weight:500;line-height:1.45;
+    box-shadow:0 8px 24px rgba(24,58,68,0.30);
+    opacity:0;transition:opacity .12s ease;white-space:nowrap;
+    font-feature-settings:"tnum";
+  }
+  #chartTip .tt-title{font-weight:600;font-size:10.5px;color:rgba(255,255,255,0.8);margin-bottom:5px;letter-spacing:.2px}
+  #chartTip .tt-row{display:flex;align-items:center;gap:8px}
+  #chartTip .tt-row + .tt-row{margin-top:3px}
+  #chartTip .tt-sw{width:9px;height:9px;border-radius:2px;flex-shrink:0;box-shadow:0 0 0 1px rgba(255,255,255,0.45)}
+
+  /* ─────────────────────────────────────────────── RESPONSIVE */
+  @media (max-width:1280px){
+    main{padding:14px 16px 18px;gap:12px}
+    header{padding:16px 20px}
+    .number{font-size:32px}
+    .t-google-conv .number,.t-meta-leads .number{font-size:46px}
+    .t-total .number{font-size:30px}
+    .summary-title{font-size:18px}
+    .summary-body{font-size:12.5px;line-height:1.55}
+    .hero-title{font-size:19px}
+    .h-stat .v{font-size:18px}
+  }
+
+  @media (max-width:1024px){
+    .screen{height:auto;min-height:0;overflow:visible}
+    header{padding:14px 18px;flex-wrap:wrap;gap:14px;border-radius:0 0 12px 12px}
+    .brand{flex-wrap:wrap;gap:14px}
+    .cta-row{flex-wrap:wrap}
+
+    main{
+      grid-template-columns:repeat(6,1fr);
+      grid-template-rows:none;
+      grid-auto-rows:minmax(160px,auto);
+      padding:14px 16px 20px;
+    }
+    .t-hero       {grid-column:1 / span 6;grid-row:auto;min-height:280px}
+    .t-top-row    {grid-column:1 / span 6;grid-row:auto;grid-template-columns:repeat(3,1fr)}
+    .t-trend      {grid-column:1 / span 6;grid-row:auto;min-height:420px}
+    .t-summary    {grid-column:1 / span 6;grid-row:auto;min-height:320px}
+    .t-g-cpc      {grid-column:1 / span 3;grid-row:auto}
+    .t-m-cpm      {grid-column:4 / span 3;grid-row:auto}
+    .t-g-clicks   {grid-column:1 / span 3;grid-row:auto}
+    .t-m-reach    {grid-column:4 / span 3;grid-row:auto}
+    .t-context      {grid-column:1 / span 6;grid-row:auto;min-height:340px}
+
+    .hero-stats{grid-template-columns:repeat(4,1fr)}
+
+  }
+
+  @media (max-width:640px){
+    header{padding:14px 16px;flex-direction:column;align-items:flex-start;border-radius:0 0 10px 10px}
+    .brand{gap:10px;width:100%}
+    .aeva-logo{height:24px}
+    .client-logo{height:28px}
+    .brand-divider{height:24px}
+    .title-block{margin-left:0;flex-basis:100%}
+    h1{font-size:15px;line-height:1.2}
+    .eyebrow{font-size:9px;letter-spacing:1.4px}
+    .cta-row{width:100%;justify-content:space-between;gap:8px}
+    .pill{padding:7px 12px;font-size:11px}
+    .btn{padding:9px 14px;font-size:11px}
+
+    main{grid-template-columns:1fr;gap:12px;padding:12px 12px 18px;grid-auto-rows:auto}
+    .tile{padding:14px 14px;border-radius:14px}
+
+    .t-hero,.t-top-row,.t-trend,.t-summary,
+    .t-g-cpc,.t-m-cpm,.t-g-clicks,.t-m-reach,.t-context{grid-column:1 / -1;min-height:0}
+    .t-hero{min-height:auto}
+    .t-trend{min-height:380px}
+    .t-context{min-height:300px}
+    .t-top-row{grid-template-columns:1fr;gap:12px}
+
+    .hero-title{font-size:17px;line-height:1.32}
+    .hero-stats{grid-template-columns:1fr 1fr;gap:8px}
+    .h-stat{padding:9px 10px}
+    .h-stat .v{font-size:17px}
+    .h-stat .s{font-size:10px}
+
+    .t-google-conv,.t-meta-leads{padding-top:16px}
+    .t-google-conv .number,.t-meta-leads .number{font-size:42px;letter-spacing:-1.5px}
+    .t-total .number{font-size:28px}
+    .t-total .number small{font-size:14px}
+    .ch-chip{top:12px;right:12px;font-size:9px;padding:3px 7px}
+    .compact{padding-left:18px;padding-top:14px;padding-bottom:14px}
+    .compact .number{font-size:26px}
+    .t-summary{padding:16px 16px}
+    .summary-title{font-size:17px;margin-bottom:10px}
+    .summary-body{font-size:13px;line-height:1.6}
+    .trend-head{flex-direction:column;gap:8px;margin-bottom:8px}
+    .legend-inline{font-size:10.5px;gap:12px}
+    .trend-stack{grid-template-rows:1.4fr 1fr;gap:8px}
+    .legend-block .row{font-size:11.5px}
+    .pie-center .v{font-size:20px}
+
+  }
+
+  @media (max-width:380px){
+    h1{font-size:14px}
+    .pill{font-size:10.5px;padding:6px 10px}
+    .btn{font-size:10.5px;padding:8px 12px}
+    .hero-title{font-size:16px}
+    .summary-title{font-size:16px}
+    .t-google-conv .number,.t-meta-leads .number{font-size:38px}
+  }
+
+  /* ─── Lead mix tile */
+  .t-context .ctx-title{font-weight:600;font-size:14px;color:var(--fg-strong);margin-top:3px;letter-spacing:-.1px}
+  .mix-grid{flex:1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;min-height:0;margin-top:8px}
+  .mix-col{display:flex;flex-direction:column;min-height:0}
+  .mix-sub{font-size:11px;font-weight:600;color:var(--fg-default);margin-bottom:4px}
+  .mix-donut{position:relative;flex:1;min-height:70px}
+  .mix-center{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
+  .mix-center .v{font-weight:700;font-size:18px;color:var(--fg-strong);letter-spacing:-.4px}
+  .mix-leg{margin-top:8px;display:flex;flex-direction:column;gap:3px;min-height:73px}
+  .mix-leg .row{display:flex;justify-content:space-between;align-items:center;font-size:10.5px;gap:6px}
+  .mix-leg .left{display:flex;align-items:center;color:var(--fg-default);font-weight:500;white-space:nowrap}
+  .mix-leg .left .sq{width:9px;height:9px;border-radius:2.5px;margin-right:7px;flex-shrink:0}
+  .mix-leg .v{font-weight:600;color:var(--fg-strong);font-feature-settings:"tnum"}
+  @media (max-width:640px){.t-context{min-height:340px}}
+</style>
+</head>
+<body>
+
+<div class="screen">
+
+<header>
+  <div class="brand">
+    <img class="aeva-logo" src="images/Aeva-logo.svg" alt="AEVA">
+    <span class="brand-divider" aria-hidden="true"></span>
+    <img class="client-logo" src="images/sb-logo-white.png" alt="Smile Brookline">
+    <div class="title-block">
+      <div class="eyebrow">performance hub</div>
+      <h1>Paid Ads Performance · <em>Meta &amp; Google</em></h1>
+    </div>
+  </div>
+  <div class="cta-row">
+    <div class="pill"><i class="far fa-calendar"></i>Oct 13 → Nov 17 · <b>2026</b></div>
+    <button class="btn" onclick="window.print()"><i class="fas fa-arrow-down-to-bracket"></i>Export Report</button>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <div class="tile hero t-hero">
+    <div class="hero-eyebrow">headline · 36-day window</div>
+    <div class="hero-title"><em class="m">Meta</em> drove <em>57 leads</em> at <em>$20.09</em>.<br><em class="g">Google</em> drove <em>22 conversions</em> at <em>$108</em>.</div>
+    <div class="hero-stats">
+      <div class="h-stat"><div class="l">Total spend</div><div class="v">$3,522</div><div class="s">67% Google · 33% Meta</div></div>
+      <div class="h-stat"><div class="l">Total leads</div><div class="v">79</div><div class="s">22 Google · 57 Meta</div></div>
+      <div class="h-stat"><div class="l">Blended CPL</div><div class="v">$44.59</div><div class="s">spend ÷ leads</div></div>
+      <div class="h-stat"><div class="l">Combined clicks</div><div class="v">1,127</div><div class="s">289 G · 838 M</div></div>
+    </div>
+  </div>
+
+  <!-- Top row -->
+  <div class="t-top-row">
+    <div class="tile t-google-conv">
+      <div class="ch-chip g"><i class="fab fa-google"></i>Google</div>
+      <div class="label">Conversions</div>
+      <div class="number">22</div>
+      <div class="caption">CPA · <b>$108.06</b></div>
+    </div>
+    <div class="tile t-meta-leads">
+      <div class="ch-chip m"><i class="fab fa-meta"></i>Meta</div>
+      <div class="label">Instant form leads</div>
+      <div class="number">57</div>
+      <div class="caption">Cost / lead · <b>$20.09</b></div>
+    </div>
+    <div class="tile t-total">
+      <div class="label">Total spend</div>
+      <div class="number">$3,522<small>.36</small></div>
+      <div class="caption">36 days combined · <b>$98</b>/day average</div>
+    </div>
+  </div>
+
+  <!-- TREND -->
+  <div class="tile t-trend">
+    <div class="trend-head">
+      <div>
+        <div class="label">Daily trend</div>
+        <div class="h-title">Spend &amp; leads · Oct 13 → Nov 17</div>
+      </div>
+      <div class="legend-inline">
+        <span><span class="dot g"></span>Google</span>
+        <span><span class="dot m"></span>Meta</span>
+      </div>
+    </div>
+    <div class="trend-stack">
+      <div class="chart-block">
+        <div class="micro-label">Daily spend · USD</div>
+        <div class="chart-wrap"><canvas id="spendChart"></canvas></div>
+      </div>
+      <div class="chart-block">
+        <div class="micro-label">Daily leads &amp; conversions</div>
+        <div class="chart-wrap"><canvas id="convChart"></canvas></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="tile t-summary">
+    <div class="label">Executive summary</div>
+    <div class="summary-title">This is the overview of <em>4 campaigns</em> run by AEVA across <em>2 ad platforms</em>.</div>
+    <div class="summary-body">
+      <p>Over 36 days Smile Brookline invested <b>$3,522</b> and produced <b>79 leads</b> at a blended <b>$44.59</b>.</p>
+      <p><span class="tag-m"><i class="fab fa-meta"></i>Meta</span> spent <b>$1,145</b> on two instant form campaigns for <b>TMJ</b> and <b>Sleep Apnea</b>, returning <b>57 leads</b> at <b>$20.09</b>. We checked all 59 submissions. None look like spam, and every lead reported matching symptoms.</p>
+      <p><span class="tag-g"><i class="fab fa-google"></i>Google</span> spent <b>$2,377</b> for <b>22 conversions</b> at <b>$108</b>, 19 of them from <b>Dental Services</b>. It started slower after <b>CallRail</b>, the source of about <b>60%</b> of its conversions, was removed on <b>Oct 13</b>. The bidding is relearning on a stricter signal while the landing pages hold steady.</p>
+    </div>
+  </div>
+
+  <!-- COMPACT KPIs -->
+  <div class="tile brand-google compact t-g-cpc">
+    <div class="label">Google · CPC</div>
+    <div class="number">$8.23</div>
+    <div class="caption">Avg cost per click</div>
+  </div>
+  <div class="tile brand-google compact t-g-clicks">
+    <div class="label">Google · Clicks</div>
+    <div class="number">289</div>
+    <div class="caption">CTR · <b>4.77%</b></div>
+  </div>
+  <div class="tile brand-meta compact t-m-cpm">
+    <div class="label">Meta · CPM</div>
+    <div class="number">$48.57</div>
+    <div class="caption">Avg cost / 1K impressions</div>
+  </div>
+  <div class="tile brand-meta compact t-m-reach">
+    <div class="label">Meta · Reach</div>
+    <div class="number">9.4<small>K</small></div>
+    <div class="caption">Unique people · freq <b>2.51</b></div>
+  </div>
+
+  <!-- LEAD MIX -->
+  <div class="tile t-context">
+    <div class="label">Lead mix</div>
+    <div class="ctx-title">Where the 79 leads came from</div>
+    <div class="mix-grid">
+      <div class="mix-col">
+        <div class="mix-sub">By conversion type</div>
+        <div class="mix-donut"><canvas id="typePie"></canvas><div class="mix-center"><div class="v">79</div></div></div>
+        <div class="mix-leg">
+          <div class="row"><span class="left"><span class="sq" style="background:#4C9DAD"></span>Instant form</span><span class="v">57</span></div>
+          <div class="row"><span class="left"><span class="sq" style="background:#E29B32"></span>Calls from website</span><span class="v">17</span></div>
+          <div class="row"><span class="left"><span class="sq" style="background:#F0CD98"></span>Website form</span><span class="v">5</span></div>
+        </div>
+      </div>
+      <div class="mix-col">
+        <div class="mix-sub">By campaign</div>
+        <div class="mix-donut"><canvas id="campPie"></canvas><div class="mix-center"><div class="v">79</div></div></div>
+        <div class="mix-leg">
+          <div class="row"><span class="left"><span class="sq" style="background:#4C9DAD"></span>TMJ (Meta)</span><span class="v">32</span></div>
+          <div class="row"><span class="left"><span class="sq" style="background:#A6D8E2"></span>Sleep Apnea (Meta)</span><span class="v">25</span></div>
+          <div class="row"><span class="left"><span class="sq" style="background:#E29B32"></span>Dental Services (Google)</span><span class="v">19</span></div>
+          <div class="row"><span class="left"><span class="sq" style="background:#F0CD98"></span>TMJ (Google)</span><span class="v">3</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+</div><!-- /screen 01 -->
+
+
+<script>
+/* ────────────────────────────── DATA */
+const dates=["10-13","10-14","10-15","10-16","10-17","10-18","10-19","10-20","10-21","10-22","10-23","10-24","10-25","10-26","10-27","10-28","10-29","10-30","10-31","11-01","11-02","11-03","11-04","11-05","11-06","11-07","11-08","11-09","11-10","11-11","11-12","11-13","11-14","11-15","11-16","11-17"];
+
+const gCost=[37.84,96.59,79.19,79.93,98.07,51.93,47.83,66.88,73.91,63.83,78.78,45.24,44.01,74.04,47.15,65.12,55.22,65.1,65.67,26.51,82.97,77.65,76.43,53.91,69.61,64.09,21.78,41.77,34.57,113.68,112.1,93.92,67.87,78.41,49.92,75.83];
+const mCost=[14.5,41.14,37.2,22.34,20.84,46.69,35.86,28.8,30.58,30.22,28.18,23.22,43.87,38.15,35.91,28.05,32.6,33.59,11.41,46.22,35.62,36.13,27.94,28.95,19.54,29.19,46.77,33.67,28.57,41.31,31.11,22.68,19.51,45.86,37.88,30.91];
+const gConv=[0,3,0,0,2,0,0,0,0,1,2,2,0,0,0,0,0,0,1,1,0,0,0,0,1,1,0,0,2,0,2.5,0.5,2.5,0.5,0,0];
+const mConv=[0,4,2,1,2,3,0,2,5,0,1,0,2,1,3,1,3,0,0,1,2,3,3,1,1,1,1,1,2,2,0,0,4,4,0,1];
+
+const BLENDED_CPL=44.59;
+
+const C_G='#E29B32';
+const C_M='#4C9DAD';
+const T_CO2='#6A4C93', T_HF='#C0507E', T_LHR='#2F7D42', T_CP='#3A475F';
+const TXT='#8F9BB7';
+const GRID='rgba(143,155,183,0.18)';
+
+Chart.defaults.font.family='Poppins';
+Chart.defaults.color=TXT;
+Chart.defaults.font.weight='500';
+
+/* Floating tooltip: Chart.js paints its own tooltip inside the canvas, which
+   sits underneath the donut centre labels and gets clipped by the tile.
+   This renders it as a DOM node on top of everything instead. */
+const tipEl=(()=>{const d=document.createElement('div');d.id='chartTip';document.body.appendChild(d);return d;})();
+
+/* Line datasets fill with a near-transparent colour, so fall back to the
+   stroke colour rather than painting an invisible swatch. */
+function swatch(c){
+  if(!c) return 'rgba(255,255,255,0.6)';
+  const bg=c.backgroundColor, bd=c.borderColor;
+  const faint = typeof bg==='string' && /rgba\([^)]*,\s*0?\.[0-4]\d*\s*\)/.test(bg);
+  return (!bg||faint) ? (bd||bg||'rgba(255,255,255,0.6)') : bg;
+}
+
+function externalTooltip(context){
+  const {chart,tooltip}=context;
+  if(!tooltip||tooltip.opacity===0){tipEl.style.opacity=0;return;}
+  const title=(tooltip.title||[]).join(' ');
+  const lines=(tooltip.body||[]).flatMap(b=>b.lines);
+  const colors=tooltip.labelColors||[];
+  let html=title?'<div class="tt-title">'+title+'</div>':'';
+  lines.forEach((l,i)=>{
+    html+='<div class="tt-row"><span class="tt-sw" style="background:'+swatch(colors[i])+'"></span><span>'+l+'</span></div>';
+  });
+  tipEl.innerHTML=html;
+  tipEl.style.opacity=1;
+
+  const r=chart.canvas.getBoundingClientRect();
+  const w=tipEl.offsetWidth, h=tipEl.offsetHeight, pad=8;
+  let x=r.left+tooltip.caretX-w/2;
+  let y=r.top+tooltip.caretY-h-12;
+  x=Math.max(pad,Math.min(x,window.innerWidth-w-pad));
+  if(y<pad) y=r.top+tooltip.caretY+14;
+  tipEl.style.left=x+'px';
+  tipEl.style.top=y+'px';
+}
+
+Chart.defaults.plugins.tooltip.enabled=false;
+Chart.defaults.plugins.tooltip.external=externalTooltip;
+
+
+const money=v=>'$'+v.toLocaleString('en-US',{maximumFractionDigits:0});
+
+/* Dashed reference-line plugin */
+const refLine={
+  id:'refLine',
+  afterDatasetsDraw(chart,args,opts){
+    const o=chart.options.plugins.refLine; if(!o||!o.value) return;
+    const {ctx,chartArea,scales}=chart;
+    const axis=o.axis==='x'?scales.x:scales.y;
+    const p=axis.getPixelForValue(o.value);
+    ctx.save();
+    ctx.setLineDash([4,4]); ctx.lineWidth=1.5; ctx.strokeStyle=o.color||'#6C7B97';
+    ctx.beginPath();
+    if(o.axis==='x'){ctx.moveTo(p,chartArea.top);ctx.lineTo(p,chartArea.bottom);}
+    else{ctx.moveTo(chartArea.left,p);ctx.lineTo(chartArea.right,p);}
+    ctx.stroke(); ctx.restore();
+  }
+};
+Chart.register(refLine);
+
+/* ────────────────────────────── SCREEN 01 */
+new Chart(document.getElementById('spendChart'),{
+  type:'line',
+  data:{labels:dates,datasets:[
+    {label:'Google',data:gCost,borderColor:C_G,backgroundColor:'rgba(226,155,50,0.14)',fill:true,tension:.4,borderWidth:2,pointRadius:0,pointHoverRadius:5},
+    {label:'Meta',data:mCost,borderColor:C_M,backgroundColor:'rgba(76,157,173,0.16)',fill:true,tension:.4,borderWidth:2,pointRadius:0,pointHoverRadius:5}
+  ]},
+  options:{
+    maintainAspectRatio:false,responsive:true,
+    interaction:{intersect:false,mode:'index'},
+    plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.dataset.label+': $'+c.parsed.y.toFixed(2)}}},
+    scales:{
+      x:{grid:{display:false},border:{display:false},ticks:{color:TXT,font:{size:9,weight:'500'},maxRotation:0,autoSkipPadding:14}},
+      y:{grid:{color:GRID},border:{display:false},ticks:{color:TXT,font:{size:9},callback:v=>'$'+v}}
+    }
+  }
+});
+
+new Chart(document.getElementById('convChart'),{
+  type:'bar',
+  data:{labels:dates,datasets:[
+    {label:'Google',data:gConv,backgroundColor:C_G,borderRadius:3,barPercentage:.92,categoryPercentage:.94,stack:'conv'},
+    {label:'Meta',data:mConv,backgroundColor:C_M,borderRadius:3,barPercentage:.92,categoryPercentage:.94,stack:'conv'}
+  ]},
+  options:{
+    maintainAspectRatio:false,responsive:true,
+    interaction:{intersect:false,mode:'index'},
+    plugins:{legend:{display:false}},
+    scales:{
+      x:{stacked:true,grid:{display:false},border:{display:false},ticks:{display:false}},
+      y:{stacked:true,grid:{color:GRID},border:{display:false},ticks:{color:TXT,font:{size:9},stepSize:2}}
+    }
+  }
+});
+
+
+/* ────────────────────────────── LEAD MIX DONUTS */
+function mixDonut(id,labels,data,colors){
+  new Chart(document.getElementById(id),{
+    type:'doughnut',
+    data:{labels,datasets:[{data,backgroundColor:colors,borderColor:'#fff',borderWidth:2,hoverOffset:4}]},
+    options:{maintainAspectRatio:false,responsive:true,cutout:'68%',
+      plugins:{legend:{display:false},tooltip:{callbacks:{title:()=>'',label:c=>c.label+': '+c.parsed+' ('+Math.round(c.parsed/79*100)+'%)'}}}}
+  });
+}
+mixDonut('typePie',['Instant form (Meta)','Calls from website (Google)','Website form (Google)'],[57,17,5],['#4C9DAD','#E29B32','#F0CD98']);
+mixDonut('campPie',['TMJ · Meta','Sleep Apnea · Meta','Dental Services · Google','TMJ · Google'],[32,25,19,3],['#4C9DAD','#A6D8E2','#E29B32','#F0CD98']);
+</script>
+</body>
+</html>
